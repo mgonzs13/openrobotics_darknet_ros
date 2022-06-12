@@ -14,7 +14,7 @@
 
 #include <memory>
 
-#include "openrobotics_darknet_ros/detector_node.hpp"
+#include "darknet_ros/detector_node.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 int main(int argc, char ** argv)

@@ -17,7 +17,7 @@
 #include <string>
 #include <vector>
 
-#include "openrobotics_darknet_ros/parse.hpp"
+#include "darknet_ros/parse.hpp"
 
 namespace openrobotics
 {

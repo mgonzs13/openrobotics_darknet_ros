@@ -17,7 +17,7 @@
 #include <string>
 #include <vector>
 
-#include "openrobotics_darknet_ros/parse.hpp"
+#include "darknet_ros/parse.hpp"
 
 using openrobotics::darknet_ros::parse_class_names;
 
@@ -25,7 +25,7 @@ TEST(parse, names_file_does_not_exist)
 {
   std::vector<std::string> class_names;
 
-  class_names = parse_class_names("openrobotics_darknet_ros_file_does_not_exist");
+  class_names = parse_class_names("darknet_ros_file_does_not_exist");
 
   ASSERT_EQ(0u, class_names.size());
 }

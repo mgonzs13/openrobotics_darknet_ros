@@ -12,37 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef OPENROBOTICS_DARKNET_ROS__DETECTOR_NODE_HPP_
-#define OPENROBOTICS_DARKNET_ROS__DETECTOR_NODE_HPP_
+#ifndef DARKNET_ROS__PARSE_HPP_
+#define DARKNET_ROS__PARSE_HPP_
 
-#include <memory>
 #include <string>
+#include <vector>
 
-#include "rclcpp/node.hpp"
-#include "openrobotics_darknet_ros/visibility_node.hpp"
-
+#include "darknet_ros/visibility.hpp"
 
 namespace openrobotics
 {
 namespace darknet_ros
 {
-// Forward declaration
-class DetectorNodePrivate;
-
-class DetectorNode : public rclcpp::Node
-{
-public:
-  /// \brief Create a node that uses ROS parameters to get the network
-  DARKNET_ROS_NODE_PUBLIC
-  explicit DetectorNode(rclcpp::NodeOptions options);
-
-  DARKNET_ROS_NODE_PUBLIC
-  virtual ~DetectorNode();
-
-private:
-  std::unique_ptr<DetectorNodePrivate> impl_;
-};
+/// \brief Read file containing class names, one per line
+/// \param[in] filename a path to a file containing classes a network can detect
+/// \return a container with all of the class names detected
+DARKNET_ROS_PUBLIC
+std::vector<std::string>
+parse_class_names(const std::string & filename);
 }  // namespace darknet_ros
 }  // namespace openrobotics
 
-#endif  // OPENROBOTICS_DARKNET_ROS__DETECTOR_NODE_HPP_
+#endif  // DARKNET_ROS__PARSE_HPP_

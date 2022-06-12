@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>openrobotics_darknet_ros</name>
+  <name>darknet_ros</name>
   <version>0.1.0</version>
   <description>ROS wrapper around darknet, an open source neural network framework.</description>
 

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(openrobotics_darknet_ros)
+project(darknet_ros)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -19,12 +19,12 @@ find_package(sensor_msgs REQUIRED)
 find_package(vision_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 
-add_library(openrobotics_darknet_ros SHARED
+add_library(darknet_ros SHARED
   src/detector_network.cpp
   src/parse.cpp)
-target_include_directories(openrobotics_darknet_ros PUBLIC include)
-target_compile_definitions(openrobotics_darknet_ros PRIVATE "DARKNET_ROS_BUILDING_DLL")
-ament_target_dependencies(openrobotics_darknet_ros
+target_include_directories(darknet_ros PUBLIC include)
+target_compile_definitions(darknet_ros PRIVATE "DARKNET_ROS_BUILDING_DLL")
+ament_target_dependencies(darknet_ros
   cv_bridge
   darknet_vendor
   sensor_msgs
@@ -37,7 +37,7 @@ target_compile_definitions(detector_node PRIVATE "DARKNET_ROS_NODE_BUILDING_DLL"
 ament_target_dependencies(detector_node PUBLIC
   "rclcpp"
   "rclcpp_components")
-target_link_libraries(detector_node PUBLIC openrobotics_darknet_ros)
+target_link_libraries(detector_node PUBLIC darknet_ros)
 rclcpp_components_register_nodes(detector_node "openrobotics::darknet_ros::DetectorNode")
 
 add_executable(detector_node_main
@@ -51,15 +51,15 @@ if(BUILD_TESTING)
 
   ament_add_gtest(test_parser test/test_parser.cpp
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/test/")
-  target_link_libraries(test_parser openrobotics_darknet_ros)
+  target_link_libraries(test_parser darknet_ros)
 
   ament_add_gtest(test_detector_network test/test_detector_network.cpp)
-  target_link_libraries(test_detector_network openrobotics_darknet_ros)
+  target_link_libraries(test_detector_network darknet_ros)
 endif()
 
-ament_export_libraries(openrobotics_darknet_ros)
+ament_export_libraries(darknet_ros)
 
-install(TARGETS openrobotics_darknet_ros
+install(TARGETS darknet_ros
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)

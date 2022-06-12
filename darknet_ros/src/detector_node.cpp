@@ -19,9 +19,9 @@
 #include <utility>
 #include <vector>
 
-#include "openrobotics_darknet_ros/detector_node.hpp"
-#include "openrobotics_darknet_ros/detector_network.hpp"
-#include "openrobotics_darknet_ros/parse.hpp"
+#include "darknet_ros/detector_node.hpp"
+#include "darknet_ros/detector_network.hpp"
+#include "darknet_ros/parse.hpp"
 #include "rcl_interfaces/msg/parameter_descriptor.hpp"
 #include "rclcpp/parameter_value.hpp"
 #include "std_srvs/srv/set_bool.hpp"

@@ -19,8 +19,8 @@
  * library cannot have, but the consuming code must have inorder to link.
  */
 
-#ifndef OPENROBOTICS_DARKNET_ROS__VISIBILITY_HPP_
-#define OPENROBOTICS_DARKNET_ROS__VISIBILITY_HPP_
+#ifndef DARKNET_ROS__VISIBILITY_HPP_
+#define DARKNET_ROS__VISIBILITY_HPP_
 
 // This logic was borrowed (then namespaced) from the examples on the gcc wiki:
 //     https://gcc.gnu.org/wiki/Visibility
@@ -53,4 +53,4 @@
   #define DARKNET_ROS_PUBLIC_TYPE
 #endif
 
-#endif  // OPENROBOTICS_DARKNET_ROS__VISIBILITY_HPP_
+#endif  // DARKNET_ROS__VISIBILITY_HPP_
