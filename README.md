@@ -38,7 +38,7 @@ This node can run object detectors like [YOLOv3](https://pjreddie.com/darknet/yo
 - `detection.threshold` - Minimum probability of a detection to be published
 - `detection.nms_threshold` - Non-maximal Suppression threshold - controls filtering of overlapping boxes
 
-### Example
+## Example
 
 Download `YOLOv3-tiny`.
 
