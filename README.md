@@ -16,6 +16,10 @@ This node can run object detectors like [YOLOv3](https://pjreddie.com/darknet/yo
 
 * `~/detections` (type `vision_msgs/msg/Detection2DArray`) - Objects detected in an image (if any)
 
+### Services
+
+* `~/enable` (type `std_srvs::srv::SetBool`) - Enable/disable darknet detector
+
 ### Parameters
 
 * `network.config` - a path to a file describing a darknet detector network
@@ -44,6 +48,7 @@ Save the following as `detector_node_params.yaml`
       weights: "./yolov3-tiny.weights"
       class_names: "./coco.names"
     detection:
+      enable: true
       threshold: 0.25
       nms_threshold: 0.45
 ```

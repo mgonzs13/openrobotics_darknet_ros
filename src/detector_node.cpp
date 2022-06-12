@@ -24,6 +24,7 @@
 #include "openrobotics_darknet_ros/parse.hpp"
 #include "rcl_interfaces/msg/parameter_descriptor.hpp"
 #include "rclcpp/parameter_value.hpp"
+#include "std_srvs/srv/set_bool.hpp"
 
 namespace openrobotics
 {
@@ -34,12 +35,21 @@ class DetectorNodePrivate
 public:
   void on_image_rx(const sensor_msgs::msg::Image::ConstSharedPtr image_msg)
   {
-    vision_msgs::msg::Detection2DArray::UniquePtr detections(
-      new vision_msgs::msg::Detection2DArray);
-    // std::cerr << "using threshold " << threshold_ << " nms " << nms_threshold_ << "\n";
-    if (network_->detect(*image_msg, threshold_, nms_threshold_, &*detections)) {
-      detections_pub_->publish(std::move(detections));
+    if(enable_){
+      vision_msgs::msg::Detection2DArray::UniquePtr detections(
+        new vision_msgs::msg::Detection2DArray);
+      // std::cerr << "using threshold " << threshold_ << " nms " << nms_threshold_ << "\n";
+      if (network_->detect(*image_msg, threshold_, nms_threshold_, &*detections)) {
+        detections_pub_->publish(std::move(detections));
+      }
     }
+  }
+
+  void on_enable(const std::shared_ptr<std_srvs::srv::SetBool::Request> request,
+                 std::shared_ptr<std_srvs::srv::SetBool::Response> response)
+  {
+    enable_ = request->data;
+    response->success = true;
   }
 
   rcl_interfaces::msg::SetParametersResult
@@ -64,8 +74,11 @@ public:
           result.successful = false;
           result.reason = "nms_threshold out of range [0.0, 1.0]";
         }
+      } else if(enable_desc_.name == parameter.get_name()){
+        enable_ = parameter.as_bool();
       }
     }
+
     if (result.successful) {
       threshold_ = new_threshold;
       nms_threshold_ = new_nms_threshold;
@@ -77,12 +90,15 @@ public:
   std::unique_ptr<DetectorNetwork> network_;
   rclcpp::Publisher<vision_msgs::msg::Detection2DArray>::SharedPtr detections_pub_;
   rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr image_sub_;
+  rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr enable_service_;
 
   double threshold_ = 0.25;
   double nms_threshold_ = 0.45;
+  bool enable_ = true;
 
   rcl_interfaces::msg::ParameterDescriptor threshold_desc_;
   rcl_interfaces::msg::ParameterDescriptor nms_threshold_desc_;
+  rcl_interfaces::msg::ParameterDescriptor enable_desc_;
 };
 
 DetectorNode::DetectorNode(rclcpp::NodeOptions options)
@@ -136,6 +152,14 @@ DetectorNode::DetectorNode(rclcpp::NodeOptions options)
     rclcpp::ParameterValue(impl_->nms_threshold_),
     impl_->nms_threshold_desc_).get<double>();
 
+  impl_->enable_desc_.description = "Enable darknet detector";
+  impl_->enable_desc_.type = rcl_interfaces::msg::ParameterType::PARAMETER_BOOL;
+  impl_->enable_desc_.name = "detection.enable";
+  impl_->enable_ = declare_parameter(
+    impl_->enable_desc_.name,
+    rclcpp::ParameterValue(impl_->enable_),
+    impl_->enable_desc_).get<bool>();
+
   set_on_parameters_set_callback(
     std::bind(&DetectorNodePrivate::on_parameters_change, &*impl_, std::placeholders::_1));
 
@@ -152,6 +176,10 @@ DetectorNode::DetectorNode(rclcpp::NodeOptions options)
   // Input topic ~/images [sensor_msgs/msg/Image]
   impl_->image_sub_ = this->create_subscription<sensor_msgs::msg::Image>(
     "~/images", 12, std::bind(&DetectorNodePrivate::on_image_rx, &*impl_, std::placeholders::_1));
+
+  // Service ~/enable [std_srvs::srv::SetBool]
+  impl_->enable_service_ = this->create_service<std_srvs::srv::SetBool>(
+    "~/enable", std::bind(&DetectorNodePrivate::on_enable, &*impl_, std::placeholders::_1, std::placeholders::_2));
 }
 
 DetectorNode::~DetectorNode()
