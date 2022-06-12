@@ -1,0 +1,4 @@
+[submodule "darknet_vendor"]
+	path = darknet_vendor
+	url = https://github.com/ros2/darknet_vendor.git
+	branch = master
