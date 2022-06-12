@@ -169,17 +169,17 @@ DetectorNode::DetectorNode(rclcpp::NodeOptions options)
   impl_->network_.reset(
     new DetectorNetwork(network_config_path, network_weights_path, class_names));
 
-  // Ouput topic ~/detections [vision_msgs/msg/Detection2DArray]
+  // Ouput topic detections [vision_msgs/msg/Detection2DArray]
   impl_->detections_pub_ = this->create_publisher<vision_msgs::msg::Detection2DArray>(
-    "~/detections", 1);
+    "detections", 1);
 
-  // Input topic ~/images [sensor_msgs/msg/Image]
+  // Input topic images [sensor_msgs/msg/Image]
   impl_->image_sub_ = this->create_subscription<sensor_msgs::msg::Image>(
-    "~/images", 12, std::bind(&DetectorNodePrivate::on_image_rx, &*impl_, std::placeholders::_1));
+    "images", 12, std::bind(&DetectorNodePrivate::on_image_rx, &*impl_, std::placeholders::_1));
 
-  // Service ~/enable [std_srvs::srv::SetBool]
+  // Service enable [std_srvs::srv::SetBool]
   impl_->enable_service_ = this->create_service<std_srvs::srv::SetBool>(
-    "~/enable", std::bind(&DetectorNodePrivate::on_enable, &*impl_, std::placeholders::_1, std::placeholders::_2));
+    "enable", std::bind(&DetectorNodePrivate::on_enable, &*impl_, std::placeholders::_1, std::placeholders::_2));
 }
 
 DetectorNode::~DetectorNode()

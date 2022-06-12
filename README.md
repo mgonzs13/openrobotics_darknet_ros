@@ -10,15 +10,15 @@ This node can run object detectors like [YOLOv3](https://pjreddie.com/darknet/yo
 
 ### Subscribers
 
-* `~/images` (type `sensor_msgs/msg/Image`) - Input mages to feed to the detector
+* `images` (type `sensor_msgs/msg/Image`) - Input mages to feed to the detector
 
 ### Publishers
 
-* `~/detections` (type `vision_msgs/msg/Detection2DArray`) - Objects detected in an image (if any)
+* `detections` (type `vision_msgs/msg/Detection2DArray`) - Objects detected in an image (if any)
 
 ### Services
 
-* `~/enable` (type `std_srvs::srv::SetBool`) - Enable/disable darknet detector
+* `enable` (type `std_srvs::srv::SetBool`) - Enable/disable darknet detector
 
 ### Parameters
 
@@ -60,4 +60,4 @@ ros2 run openrobotics_darknet_ros detector_node __params:=detector_node_params.y
 ```
 
 The node is now running.
-Publish images on `~/images` to get the node to detect objects.
+Publish images on `images` to get the node to detect objects.
