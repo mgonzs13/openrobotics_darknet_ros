@@ -10,6 +10,7 @@ This is a ROS 2 wrapper around [darknet](https://pjreddie.com/darknet), an open 
 $ cd ~/ros2_ws/src
 $ git clone --recurse-submodules https://github.com/mgonzs13/openrobotics_darknet_ros.git
 $ cd ~/ros2_ws
+$ rosdep install --from-paths src -r -y --ignore-src
 $ colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select darknet_vendor
 $ colcon build
 ```
@@ -69,5 +70,8 @@ Then run the node.
 $ ros2 run darknet_ros detector_node --ros-args --params-file detector_node_params.yaml
 ```
 
-The node is now running.
-Publish images on `images` to get the node to detect objects.
+Or run the launch
+
+```shell
+$ ros2 launch darknet_bringup darknet.launch.py network_config:=yolov3-tiny.cfg weights:=yolov3-tiny.weights class_names:=coco.name
+```
