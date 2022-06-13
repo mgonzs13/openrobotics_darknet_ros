@@ -49,6 +49,8 @@ $ wget https://pjreddie.com/media/files/yolov3-tiny.weights
 $ wget https://raw.githubusercontent.com/pjreddie/darknet/c6afc7ff1499fbbe64069e1843d7929bd7ae2eaa/data/coco.names
 ```
 
+### Node
+
 Save the following as `detector_node_params.yaml`
 
 ```yaml
@@ -64,13 +66,12 @@ Save the following as `detector_node_params.yaml`
       nms_threshold: 0.45
 ```
 
-Then run the node.
 
 ```shell
 $ ros2 run darknet_ros detector_node --ros-args --params-file detector_node_params.yaml
 ```
 
-Or run the launch
+### Launch
 
 ```shell
 $ ros2 launch darknet_bringup darknet.launch.py network_config:=yolov3-tiny.cfg weights:=yolov3-tiny.weights class_names:=coco.name
