@@ -11,7 +11,7 @@ $ cd ~/ros2_ws/src
 $ git clone --recurse-submodules https://github.com/mgonzs13/openrobotics_darknet_ros.git
 $ cd ~/ros2_ws
 $ rosdep install --from-paths src -r -y --ignore-src
-$ colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select darknet_vendor
+$ colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select darknet_vendor # -DDARKNET_CUDA=Off -DDARKNET_OPENCV=Off
 $ colcon build
 ```
 
@@ -66,7 +66,6 @@ Save the following as `detector_node_params.yaml`
       nms_threshold: 0.45
 ```
 
-
 ```shell
 $ ros2 run darknet_ros detector_node --ros-args --params-file detector_node_params.yaml
 ```
@@ -74,5 +73,5 @@ $ ros2 run darknet_ros detector_node --ros-args --params-file detector_node_para
 ### Launch
 
 ```shell
-$ ros2 launch darknet_bringup darknet.launch.py network_config:=yolov3-tiny.cfg weights:=yolov3-tiny.weights class_names:=coco.name
+$ ros2 launch darknet_bringup darknet.launch.py network_config:=yolov3-tiny.cfg weights:=yolov3-tiny.weights class_names:=coco.names
 ```

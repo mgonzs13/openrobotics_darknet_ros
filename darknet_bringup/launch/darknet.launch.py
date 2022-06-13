@@ -18,19 +18,22 @@ def generate_launch_description():
     network_config = LaunchConfiguration("network_config")
     network_config_cmd = DeclareLaunchArgument(
         "network_config",
-        default_value=os.path.join(darknet_bringup_path, "config", "yolov3-tiny.cfg"),
+        default_value=os.path.join(
+            darknet_bringup_path, "config", "yolov3-tiny.cfg"),
         description="Network configuration file (.cfg)")
 
     weights = LaunchConfiguration("weights")
     weights_cmd = DeclareLaunchArgument(
         "weights",
-        default_value=os.path.join(darknet_bringup_path, "config", "yolov3-tiny.weights"),
+        default_value=os.path.join(
+            darknet_bringup_path, "config", "yolov3-tiny.weights"),
         description="Weights file (.weights)")
 
     class_names = LaunchConfiguration("class_names")
     class_names_cmd = DeclareLaunchArgument(
         "class_names",
-        default_value=os.path.join(darknet_bringup_path, "config", "coco.names"),
+        default_value=os.path.join(
+            darknet_bringup_path, "config", "coco.names"),
         description="Class names file (.names)")
 
     enalbe_darknet = LaunchConfiguration("enalbe_darknet")
@@ -42,7 +45,7 @@ def generate_launch_description():
     threshold = LaunchConfiguration("threshold")
     threshold_cmd = DeclareLaunchArgument(
         "threshold",
-        default_value="0.25",
+        default_value="0.30",
         description="Minimum probability of a detection to be published")
 
     nms_threshold = LaunchConfiguration("nms_threshold")
@@ -69,7 +72,6 @@ def generate_launch_description():
         default_value="darknet",
         description="Namespace")
 
-
     #
     # NODES
     #
@@ -83,7 +85,7 @@ def generate_launch_description():
                      "network.weights": weights,
                      "network.class_names": class_names,
                      "detection.enable": enalbe_darknet,
-                     "detection.threshold":threshold,
+                     "detection.threshold": threshold,
                      "detection.nms_threshold": nms_threshold}],
         remappings=[("images", input_image_topic)]
     )
@@ -107,7 +109,6 @@ def generate_launch_description():
         condition=IfCondition(PythonExpression([show_debug_image]))
     )
 
-
     ld = LaunchDescription()
 
     ld.add_action(network_config_cmd)
@@ -123,6 +124,5 @@ def generate_launch_description():
     ld.add_action(detector_node_cmd)
     ld.add_action(detection_visualizer_cmd)
     ld.add_action(image_view_cmd)
-
 
     return ld
