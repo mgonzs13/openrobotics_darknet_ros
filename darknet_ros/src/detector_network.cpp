@@ -151,8 +151,8 @@ DetectorNetwork::detect(
       if (detection.prob[cls] > 0.0f) {
         detection_ros.results.emplace_back();
         auto & hypothesis = detection_ros.results.back();
-        hypothesis.id = impl_->class_names_.at(cls);
-        hypothesis.score = detection.prob[cls];
+        hypothesis.hypothesis.class_id = impl_->class_names_.at(cls);
+        hypothesis.hypothesis.score = detection.prob[cls];
       }
     }
 

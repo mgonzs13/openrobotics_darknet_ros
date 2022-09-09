@@ -160,7 +160,7 @@ DetectorNode::DetectorNode(rclcpp::NodeOptions options)
     rclcpp::ParameterValue(impl_->enable_),
     impl_->enable_desc_).get<bool>();
 
-  set_on_parameters_set_callback(
+  add_on_set_parameters_callback(
     std::bind(&DetectorNodePrivate::on_parameters_change, &*impl_, std::placeholders::_1));
 
   // TODO(sloretz) raise if user tried to initialize node with undeclared parameters
