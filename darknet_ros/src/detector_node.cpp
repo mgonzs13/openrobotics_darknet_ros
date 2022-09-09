@@ -111,9 +111,7 @@ DetectorNode::DetectorNode(rclcpp::NodeOptions options)
   network_cfg_desc.read_only = true;
   network_cfg_desc.name = "network.config";
   const std::string network_config_path = declare_parameter(
-    network_cfg_desc.name,
-    rclcpp::ParameterValue(),
-    network_cfg_desc).get<std::string>();
+    network_cfg_desc.name).get<std::string>();
 
   rcl_interfaces::msg::ParameterDescriptor network_weights_desc;
   network_weights_desc.description = "Path to file describing network weights";
@@ -121,9 +119,7 @@ DetectorNode::DetectorNode(rclcpp::NodeOptions options)
   network_weights_desc.read_only = true;
   network_weights_desc.name = "network.weights";
   const std::string network_weights_path = declare_parameter(
-    network_weights_desc.name,
-    rclcpp::ParameterValue(),
-    network_weights_desc).get<std::string>();
+    network_weights_desc.name).get<std::string>();
 
   rcl_interfaces::msg::ParameterDescriptor network_class_names_desc;
   network_class_names_desc.description = "Path to file with class names (one per line)";
@@ -131,9 +127,7 @@ DetectorNode::DetectorNode(rclcpp::NodeOptions options)
   network_class_names_desc.read_only = true;
   network_class_names_desc.name = "network.class_names";
   const std::string network_class_names_path = declare_parameter(
-    network_class_names_desc.name,
-    rclcpp::ParameterValue(),
-    network_class_names_desc).get<std::string>();
+    network_class_names_desc.name).get<std::string>();
 
   impl_->threshold_desc_.description = "Minimum detection confidence [0.0, 1.0]";
   impl_->threshold_desc_.type = rcl_interfaces::msg::ParameterType::PARAMETER_DOUBLE;
