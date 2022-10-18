@@ -163,8 +163,8 @@ DetectorNetwork::detect(
     }
 
     // Copy bounding box, darknet uses center of bounding box too
-    detection_ros.bbox.center.x = detection.bbox.x;
-    detection_ros.bbox.center.y = detection.bbox.y;
+    detection_ros.bbox.center.position.x = detection.bbox.x;
+    detection_ros.bbox.center.position.y = detection.bbox.y;
     detection_ros.bbox.size_x = detection.bbox.w;
     detection_ros.bbox.size_y = detection.bbox.h;
   }

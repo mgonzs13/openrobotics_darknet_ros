@@ -109,25 +109,40 @@ DetectorNode::DetectorNode(rclcpp::NodeOptions options)
   network_cfg_desc.description = "Path to config file describing network";
   network_cfg_desc.type = rcl_interfaces::msg::ParameterType::PARAMETER_STRING;
   network_cfg_desc.read_only = true;
+  network_cfg_desc.dynamic_typing = true;
   network_cfg_desc.name = "network.config";
   const std::string network_config_path = declare_parameter(
-    network_cfg_desc.name).get<std::string>();
+    network_cfg_desc.name,
+    rclcpp::ParameterValue(),
+    network_cfg_desc).get<std::string>();
+
+  // this->declare_parameter<std::string>("new_frame", "imu_optical_frame");
+  // this->get_parameter("new_frame", this->new_frame);
+
 
   rcl_interfaces::msg::ParameterDescriptor network_weights_desc;
   network_weights_desc.description = "Path to file describing network weights";
   network_weights_desc.type = rcl_interfaces::msg::ParameterType::PARAMETER_STRING;
   network_weights_desc.read_only = true;
+  network_weights_desc.dynamic_typing = true;
   network_weights_desc.name = "network.weights";
   const std::string network_weights_path = declare_parameter(
-    network_weights_desc.name).get<std::string>();
+    network_weights_desc.name,
+    rclcpp::ParameterValue(),
+    network_weights_desc).get<std::string>();
 
   rcl_interfaces::msg::ParameterDescriptor network_class_names_desc;
   network_class_names_desc.description = "Path to file with class names (one per line)";
   network_class_names_desc.type = rcl_interfaces::msg::ParameterType::PARAMETER_STRING;
   network_class_names_desc.read_only = true;
+  network_class_names_desc.dynamic_typing = true;
   network_class_names_desc.name = "network.class_names";
+  // const std::string network_class_names_path = declare_parameter(
+  //   network_class_names_desc.name).get<std::string>();
   const std::string network_class_names_path = declare_parameter(
-    network_class_names_desc.name).get<std::string>();
+    network_class_names_desc.name,
+    rclcpp::ParameterValue(),
+    network_class_names_desc).get<std::string>();
 
   impl_->threshold_desc_.description = "Minimum detection confidence [0.0, 1.0]";
   impl_->threshold_desc_.type = rcl_interfaces::msg::ParameterType::PARAMETER_DOUBLE;
