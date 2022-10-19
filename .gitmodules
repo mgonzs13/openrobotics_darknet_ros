@@ -5,4 +5,4 @@
 [submodule "detection_visualizer"]
 	path = detection_visualizer
 	url = https://github.com/mgonzs13/detection_visualizer.git
-	branch = master
+	branch = humble
